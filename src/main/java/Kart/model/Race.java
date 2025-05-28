@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 
 public class Race {
     @Id
@@ -28,4 +29,16 @@ public class Race {
     @JoinColumn(name = "track_id")
     @JsonBackReference
     private Track track;
+
+    public Integer getTrackId() {
+        return track != null ? track.getId() : null;
+    }
+
+
+    public Race(String name, LocalDate raceDate, RaceType raceType, Track track) {
+        this.name = name;
+        this.raceDate = raceDate;
+        this.raceType = raceType;
+        this.track = track;
+    }
 }
