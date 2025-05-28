@@ -1,0 +1,56 @@
+package Kart.controller.impl;
+
+import Kart.controller.interfaces.ICompetitorController;
+import Kart.model.Competitor;
+import Kart.model.CompetitorClass;
+import Kart.service.interfaces.ICompetitorService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+public class CompetitorController implements ICompetitorController {
+    @Autowired
+    ICompetitorService competitorService;
+
+    @ResponseStatus(HttpStatus.FOUND)
+    @GetMapping("/competitors")
+    public List<Competitor> findAllCompetitors(){
+        return competitorService.findAllCompetitors();
+    }
+
+
+    @ResponseStatus(HttpStatus.FOUND)
+    @GetMapping("/competitors/class/{competitorClass}")
+    public List<Competitor> findAllByCompetitorClass(@PathVariable CompetitorClass competitorClass){
+        return  competitorService.findAllByCompetitorClass(competitorClass);
+
+    }
+
+    @PostMapping("/competitors/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Competitor newCompetitor(@RequestBody @Valid Competitor competitor){
+        return competitorService.newCompetitor(competitor);
+    }
+
+    //@PatchMapping("/competitors/update/{")
+
+    @PutMapping("/competitors/{id}")
+    public Competitor updateCompetitor(@RequestBody @Valid Competitor competitor, @PathVariable Integer id){
+        return competitorService.updateCompetitor(competitor, id);
+    }
+
+
+    //deleteMapping
+    @DeleteMapping("/competitors/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCompetitor(@PathVariable Integer id){
+
+    }
+
+}
