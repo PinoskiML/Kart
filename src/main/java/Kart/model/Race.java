@@ -25,6 +25,9 @@ public class Race {
     @Enumerated(EnumType.STRING)
     private RaceType raceType;
 
+    @NotNull
+    private Integer numberOfLaps;
+
     @ManyToOne
     @JoinColumn(name = "track_id")
     @JsonBackReference
@@ -35,10 +38,11 @@ public class Race {
     }
 
 
-    public Race(String name, LocalDate raceDate, RaceType raceType, Track track) {
+    public Race(String name, LocalDate raceDate, RaceType raceType, Integer numberOfLaps, Track track) {
         this.name = name;
         this.raceDate = raceDate;
         this.raceType = raceType;
         this.track = track;
+        this.numberOfLaps = numberOfLaps;
     }
 }
