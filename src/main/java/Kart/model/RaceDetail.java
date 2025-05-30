@@ -1,7 +1,10 @@
 package Kart.model;
 
 
+import Kart.controller.dto.CompetitorBasicDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,15 +24,39 @@ public class RaceDetail {
     @Enumerated(EnumType.STRING)
     private RaceWeather raceWeather;
     private Integer attendance;
-    private Integer fanFavorite;
-    private Integer unlucky;
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "fan_favorite_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private Competitor fanFavorite;
+
+    @ManyToOne
+    @JoinColumn(name = "unlucky_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private Competitor unlucky;
 
     @OneToOne(mappedBy = "raceDetail")
     @JsonBackReference
     @ToString.Exclude
     private Race race;
 
-    public RaceDetail(RaceTimeSlot raceTimeSlot, RaceWeather raceWeather, Integer attendance, Integer fanFavorite, Integer unlucky) {
+    @JsonProperty("fan_favorite")
+    public CompetitorBasicDTO getFanFavoriteDTO() {
+        return CompetitorBasicDTO.from(fanFavorite);
+    }
+
+    @JsonProperty("unlucky")
+    public CompetitorBasicDTO getUnluckyDTO() {
+        return CompetitorBasicDTO.from(unlucky);
+    }
+
+
+    public RaceDetail(RaceTimeSlot raceTimeSlot, RaceWeather raceWeather, Integer attendance, Competitor fanFavorite, Competitor unlucky) {
         this.raceTimeSlot = raceTimeSlot;
         this.raceWeather = raceWeather;
         this.attendance = attendance;

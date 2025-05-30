@@ -49,11 +49,10 @@ public class Race {
     }
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "race_detail_id")
     @JsonManagedReference
     @ToString.Exclude
-    //@NotNull
     private RaceDetail raceDetail;
 
 
