@@ -1,11 +1,16 @@
 package Kart.model;
 
+import Kart.controller.dto.TrackDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -30,19 +35,44 @@ public class Race {
 
     @ManyToOne
     @JoinColumn(name = "track_id")
-    @JsonBackReference
+    @JsonManagedReference
+    @JsonIgnore
     private Track track;
+
+    @JsonProperty("track")
+    public TrackDTO getTrackDTO(){
+        return TrackDTO.fromTrack(track);
+    }
 
     public Integer getTrackId() {
         return track != null ? track.getId() : null;
     }
 
 
-    public Race(String name, LocalDate raceDate, RaceType raceType, Integer numberOfLaps, Track track) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "race_detail_id")
+    @JsonManagedReference
+    @ToString.Exclude
+    //@NotNull
+    private RaceDetail raceDetail;
+
+
+
+    public Race(String name, LocalDate raceDate, RaceType raceType, Integer numberOfLaps, Track track, RaceDetail raceDetail) {
         this.name = name;
         this.raceDate = raceDate;
         this.raceType = raceType;
         this.track = track;
         this.numberOfLaps = numberOfLaps;
+        this.setRaceDetail(raceDetail);
     }
+
+    // bi  review
+    public void setRaceDetail(RaceDetail raceDetail){
+        this.raceDetail = raceDetail;
+        if (raceDetail != null && raceDetail.getRace() != this){
+            raceDetail.setRace(this);
+        }
+    }
+
 }

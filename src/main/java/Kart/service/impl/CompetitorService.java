@@ -5,11 +5,13 @@ import Kart.model.CompetitorClass;
 import Kart.model.Track;
 import Kart.repository.CompetitorRepository;
 import Kart.service.interfaces.ICompetitorService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.support.CompositeUriComponentsContributor;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -31,6 +33,14 @@ public class CompetitorService implements ICompetitorService {
     }
 
     //@PatchMapping("/competitors/update/{")
+
+    @Override
+    public void updateCompetitorTotalRaces(Integer totalRaces, Integer id) {
+        Competitor competitor = competitorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("competitor with id: " + id + "not found"));
+        competitor.setTotalRaces(totalRaces);
+        competitorRepository.save(competitor);
+    }
+
 
     //delete
 
@@ -56,4 +66,6 @@ public class CompetitorService implements ICompetitorService {
         if (competitorOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Competitor id: " +id +"not found");
         return (competitorRepository.save(competitor));
     }
+
+
 }

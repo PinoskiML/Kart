@@ -1,5 +1,6 @@
 package Kart.controller.impl;
 
+import Kart.controller.dto.CompetitorTotalRacesDTO;
 import Kart.controller.interfaces.ICompetitorController;
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
@@ -38,7 +39,15 @@ public class CompetitorController implements ICompetitorController {
         return competitorService.newCompetitor(competitor);
     }
 
-    //@PatchMapping("/competitors/update/{")
+    // ////////////////////////////////////////////////////////////patch
+    @PatchMapping("/competitors/total-races/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCompetitorTotalRaces(@RequestBody @Valid CompetitorTotalRacesDTO competitorTotalRacesDTO, @PathVariable Integer id){
+        competitorService.updateCompetitorTotalRaces(competitorTotalRacesDTO.getTotalRaces(), id);
+    }
+
+
+
 
     @PutMapping("/competitors/{id}")
     public Competitor updateCompetitor(@RequestBody @Valid Competitor competitor, @PathVariable Integer id){
