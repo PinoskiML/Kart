@@ -7,4 +7,8 @@ import java.util.List;
 public interface IRaceDetailService {
 
     List<RaceDetail> findAllRaceDetails();
+
+    RaceDetail findRaceDetailsById(Integer id);
+
+
 }

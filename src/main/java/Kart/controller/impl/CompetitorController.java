@@ -4,6 +4,7 @@ import Kart.controller.dto.CompetitorTotalRacesDTO;
 import Kart.controller.interfaces.ICompetitorController;
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
+import Kart.model.Track;
 import Kart.service.interfaces.ICompetitorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,18 @@ public class CompetitorController implements ICompetitorController {
         return competitorService.findAllCompetitors();
     }
 
+    // Find noobs
+    @ResponseStatus(HttpStatus.FOUND)
+    @GetMapping("/competitors/noobs")
+    public List<Competitor> findCompetitorsByTotalRacesLessThan(@RequestParam(defaultValue = "50") Integer totalRaces){
+        return competitorService.findCompetitorsByTotalRacesLessThan(totalRaces);
+
+    }
+    @GetMapping("competitors/{id}")
+    public Competitor findCompetitorById(@PathVariable Integer id){
+        return  competitorService.findCompetitorByid(id);
+
+    }
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/competitors/class/{competitorClass}")
@@ -60,6 +73,14 @@ public class CompetitorController implements ICompetitorController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompetitor(@PathVariable Integer id){
 
+        try {
+            competitorService.findCompetitorByid(id);
+            competitorService.deleteCompetitor(id);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }
     }
 
-}
+    }
+
+

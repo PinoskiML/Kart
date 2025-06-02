@@ -3,6 +3,7 @@ package Kart.service.impl;
 
 import Kart.model.Race;
 import Kart.model.RaceDetail;
+import Kart.model.Track;
 import Kart.repository.RaceDetailRepository;
 import Kart.repository.RaceRepository;
 import Kart.service.interfaces.IRaceService;
@@ -24,9 +25,17 @@ public class RaceService implements IRaceService {
         return raceRepository.findAll();
     }
 
+    @Override
+    public Race newRace(Race race) {
+        return raceRepository.save(race);
 
 
 
-    //diag
+        /*public Track newTrack( Track track) {
+            return trackRepository.save(track);
+        }*/
+    }
+
+//diag
 
 }

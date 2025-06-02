@@ -2,6 +2,7 @@ package Kart.service.impl;
 
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
+import Kart.model.RaceDetail;
 import Kart.model.Track;
 import Kart.repository.CompetitorRepository;
 import Kart.service.interfaces.ICompetitorService;
@@ -25,6 +26,18 @@ public class CompetitorService implements ICompetitorService {
     @Override
     public List<Competitor> findAllByCompetitorClass( CompetitorClass competitorClass){
         return competitorRepository.findAllByCompetitorClass(competitorClass);
+    }
+
+    @Override
+    public Competitor findCompetitorByid(Integer id) {
+       Optional<Competitor> competitorOptional = competitorRepository.findById(id);
+       if (competitorOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Competitor: " + id + "not found.");
+        return competitorOptional.get();
+    }
+
+    @Override
+    public List<Competitor> findCompetitorsByTotalRacesLessThan(Integer totalRaces) {
+        return competitorRepository.findAllByTotalRacesLessThan(totalRaces);
     }
 
     @Override

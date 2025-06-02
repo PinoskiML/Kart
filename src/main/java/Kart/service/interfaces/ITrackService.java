@@ -11,4 +11,6 @@ import java.util.List;
 public interface ITrackService {
   List<Track> findAll();
 
+  Track getTrackById(Integer id);
+
 }

@@ -18,4 +18,8 @@ public interface ICompetitorService {
     Competitor updateCompetitor(Competitor competitor, Integer id);
 
     void updateCompetitorTotalRaces( Integer totalRaces, Integer id);
+
+    Competitor findCompetitorByid(Integer id);
+
+    List<Competitor> findCompetitorsByTotalRacesLessThan(Integer totalRaces);
 }
