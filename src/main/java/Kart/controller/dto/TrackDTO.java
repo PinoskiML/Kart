@@ -25,7 +25,7 @@ public class TrackDTO {
     @NotNull
     private Integer numberTurns;
 
-
+    @NotNull
     private TrackType trackType;
 
     //Factory
@@ -39,8 +39,5 @@ public class TrackDTO {
                 track.getTrackType()
         );
     }
-    //rel
-
-
-
+   //rel
 }

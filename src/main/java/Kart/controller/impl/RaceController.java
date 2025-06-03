@@ -1,5 +1,6 @@
 package Kart.controller.impl;
 
+import Kart.controller.dto.NewRaceDTO;
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
 import Kart.model.Race;
@@ -8,6 +9,7 @@ import Kart.service.interfaces.IRaceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,20 +27,10 @@ public class RaceController {
         return raceService.findAllRaces();
     }
 
-
-    @ResponseStatus(HttpStatus.CREATED)
+    // Fix: Added the "/races" path to match your other endpoints
     @PostMapping("/races")
-    public Race newRace(@RequestBody @Valid Race race){
-        return raceService.newRace(race);
+    public ResponseEntity<Race> createRace(@RequestBody @Valid NewRaceDTO newRaceDTO) {
+        Race race = raceService.newRace(newRaceDTO);
+        return new ResponseEntity<>(race, HttpStatus.CREATED);
     }
-
-
-
-    /*@PostMapping("/tracks/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Track newTrack(@RequestBody @Valid Track track){
-        return trackService.newTrack(track);
-    }*/
-
-
 }

@@ -1,6 +1,7 @@
 package Kart.service.interfaces;
 
 
+import Kart.controller.dto.NewRaceDTO;
 import Kart.model.Race;
 import Kart.repository.RaceRepository;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ public interface IRaceService {
     List<Race> findAllRaces();
 
     Race newRace(Race race);
+    Race newRace(NewRaceDTO newRaceDTO);
 
     //ins method sigs
 

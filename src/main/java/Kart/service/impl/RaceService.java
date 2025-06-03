@@ -1,14 +1,23 @@
 package Kart.service.impl;
 
 
+import Kart.controller.dto.NewRaceDTO;
+
+import Kart.controller.dto.RaceDetailDTO;
+import Kart.model.Competitor;
 import Kart.model.Race;
 import Kart.model.RaceDetail;
 import Kart.model.Track;
+import Kart.repository.CompetitorRepository;
 import Kart.repository.RaceDetailRepository;
 import Kart.repository.RaceRepository;
+import Kart.repository.TrackRepository;
 import Kart.service.interfaces.IRaceService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,6 +29,13 @@ public class RaceService implements IRaceService {
     @Autowired
     RaceDetailRepository raceDetailRepository;
 
+    @Autowired
+    TrackRepository trackRepository;
+
+    @Autowired
+    CompetitorRepository competitorRepository;
+
+
     @Override
     public List<Race> findAllRaces() {
         return raceRepository.findAll();
@@ -29,13 +45,44 @@ public class RaceService implements IRaceService {
     public Race newRace(Race race) {
         return raceRepository.save(race);
 
-
-
-        /*public Track newTrack( Track track) {
-            return trackRepository.save(track);
-        }*/
     }
 
-//diag
+    @Transactional
+    @Override
+    public Race newRace(NewRaceDTO newRaceDTO) {
+        // Create objects
+        RaceDetail raceDetail = new RaceDetail();
+        raceDetail.setRaceTimeSlot(newRaceDTO.getRaceDetail().getRaceTimeSlot());
+        raceDetail.setRaceWeather(newRaceDTO.getRaceDetail().getRaceWeather());
+        raceDetail.setAttendance(newRaceDTO.getRaceDetail().getAttendance());
+
+        // Get related entities
+        Competitor unlucky = competitorRepository.findById(newRaceDTO.getRaceDetail().getUnlucky())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unlucky not found"));
+        Competitor fanFavorite = competitorRepository.findById(newRaceDTO.getRaceDetail().getFanFavorite())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fan favorite not found"));
+        Track track = trackRepository.findById(newRaceDTO.getTrackId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Track not found"));
+
+        // Set relationships
+        raceDetail.setUnlucky(unlucky);
+        raceDetail.setFanFavorite(fanFavorite);
+
+        // Create race and set relationships
+        Race race = new Race();
+        race.setName(newRaceDTO.getName());
+        race.setRaceDate(newRaceDTO.getRaceDate());
+        race.setRaceType(newRaceDTO.getRaceType());
+        race.setNumberOfLaps(newRaceDTO.getNumberOfLaps());
+        race.setTrack(track);
+
+        // Important: Set before saving - don't save raceDetail separately
+        race.setRaceDetail(raceDetail);
+
+        // S
+        return raceRepository.save(race);
+    }
+
+
 
 }

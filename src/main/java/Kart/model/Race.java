@@ -33,10 +33,10 @@ public class Race {
     @NotNull
     private Integer numberOfLaps;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "track_id")
-    @JsonManagedReference
-    @JsonIgnore
+    //@JsonManagedReference
+    //@JsonIgnore
     private Track track;
 
     @JsonProperty("track")
@@ -49,7 +49,7 @@ public class Race {
     }
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "race_detail_id")
     @JsonManagedReference
     @ToString.Exclude
@@ -73,5 +73,7 @@ public class Race {
             raceDetail.setRace(this);
         }
     }
+
+
 
 }
