@@ -27,7 +27,7 @@ public class RaceController {
         return raceService.findAllRaces();
     }
 
-    // Fix: Added the "/races" path to match your other endpoints
+
     @PostMapping("/races")
     public ResponseEntity<Race> createRace(@RequestBody @Valid NewRaceDTO newRaceDTO) {
         Race race = raceService.newRace(newRaceDTO);

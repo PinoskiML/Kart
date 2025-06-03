@@ -56,7 +56,7 @@ public class RaceService implements IRaceService {
         raceDetail.setRaceWeather(newRaceDTO.getRaceDetail().getRaceWeather());
         raceDetail.setAttendance(newRaceDTO.getRaceDetail().getAttendance());
 
-        // Get related entities
+        // Competitors
         Competitor unlucky = competitorRepository.findById(newRaceDTO.getRaceDetail().getUnlucky())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unlucky not found"));
         Competitor fanFavorite = competitorRepository.findById(newRaceDTO.getRaceDetail().getFanFavorite())
@@ -79,7 +79,6 @@ public class RaceService implements IRaceService {
         // Important: Set before saving - don't save raceDetail separately
         race.setRaceDetail(raceDetail);
 
-        // S
         return raceRepository.save(race);
     }
 

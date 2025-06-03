@@ -17,7 +17,7 @@ import java.time.LocalDate;
 //pojo
 public class NewRaceDTO {
 
-    private Integer id;  //albeit autogen
+    private Integer id;
 
     @NotNull (message = "Name can't be empty")
     private String name;

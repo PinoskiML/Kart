@@ -29,7 +29,7 @@ public class CompetitorController implements ICompetitorController {
     // Find noobs
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/competitors/noobs")
-    public List<Competitor> findCompetitorsByTotalRacesLessThan(@RequestParam(defaultValue = "50") Integer totalRaces){
+    public List<Competitor> findCompetitorsByTotalRacesLessThan(@RequestParam(defaultValue = "10") Integer totalRaces){
         return competitorService.findCompetitorsByTotalRacesLessThan(totalRaces);
 
     }
@@ -46,14 +46,14 @@ public class CompetitorController implements ICompetitorController {
 
     }
 
-    @PostMapping("/competitors/new")
+    @PostMapping("/competitors/")
     @ResponseStatus(HttpStatus.CREATED)
     public Competitor newCompetitor(@RequestBody @Valid Competitor competitor){
         return competitorService.newCompetitor(competitor);
     }
 
     // ////////////////////////////////////////////////////////////patch
-    @PatchMapping("/competitors/total-races/{id}")
+    @PatchMapping("/competitors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCompetitorTotalRaces(@RequestBody @Valid CompetitorTotalRacesDTO competitorTotalRacesDTO, @PathVariable Integer id){
         competitorService.updateCompetitorTotalRaces(competitorTotalRacesDTO.getTotalRaces(), id);
@@ -69,7 +69,7 @@ public class CompetitorController implements ICompetitorController {
 
 
     //deleteMapping
-    @DeleteMapping("/competitors/delete/{id}")
+    @DeleteMapping("/competitors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompetitor(@PathVariable Integer id){
 

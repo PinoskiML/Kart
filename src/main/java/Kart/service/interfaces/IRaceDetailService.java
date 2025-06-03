@@ -11,4 +11,6 @@ public interface IRaceDetailService {
     RaceDetail findRaceDetailsById(Integer id);
 
 
+    void updateRaceDetailUnlucky( Integer totalRaces, Integer id);
+
 }
