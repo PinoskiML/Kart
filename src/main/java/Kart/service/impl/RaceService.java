@@ -47,6 +47,25 @@ public class RaceService implements IRaceService {
 
     }
 
+    @Override
+    public Race getRaceById(Integer id) {
+        if(!raceRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't find race with Id: " + id);
+        }
+        return raceRepository.findById(id).get();
+    }
+
+    @Override
+    public void deleteRace(Integer id) {
+
+        if (!raceRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't delete, there is no race with Id: " +id );
+        }
+        raceRepository.deleteById(id);
+
+
+    }
+
     @Transactional
     @Override
     public Race newRace(NewRaceDTO newRaceDTO) {

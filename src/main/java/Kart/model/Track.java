@@ -37,6 +37,7 @@ public class Track {
     @JsonBackReference
 
     @OneToMany(mappedBy = "track")
+    //@JsonManagedReference
     private List<Race> races;
 
 

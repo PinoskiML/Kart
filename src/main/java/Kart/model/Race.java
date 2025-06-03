@@ -40,12 +40,9 @@ public class Race {
     private Track track;
 
     @JsonProperty("track")
+    @JsonManagedReference
     public TrackDTO getTrackDTO(){
         return TrackDTO.fromTrack(track);
-    }
-
-    public Integer getTrackId() {
-        return track != null ? track.getId() : null;
     }
 
 

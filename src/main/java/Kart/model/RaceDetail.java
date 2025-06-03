@@ -27,14 +27,17 @@ public class RaceDetail {
 
 
 
+  // luck
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fan_favorite_id")
+    @JsonIgnore
     private Competitor fanFavorite;
 
-    // In RaceDetail.java
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unlucky_id")
+    @JsonIgnore
     private Competitor unlucky;
 
     @OneToOne(mappedBy = "raceDetail")
@@ -42,26 +45,18 @@ public class RaceDetail {
     @ToString.Exclude
     private Race race;
 
-  /*  @JsonProperty("fan_favorite")
-    public CompetitorBasicDTO getFanFavoriteDTO() {
-        return CompetitorBasicDTO.from(fanFavorite);
-    }
-
-    @JsonProperty("unlucky")
-    public CompetitorBasicDTO getUnluckyDTO() {
-        return CompetitorBasicDTO.from(unlucky);
-    }
-*/
-/*  @JsonProperty("fan_favorite")
-  public CompetitorBasicDTO getFanFavoriteDTO() {
-      return fanFavorite != null ? CompetitorBasicDTO.from(fanFavorite) : null;
-  }*/
+// h
 
     @JsonProperty("unlucky")
     public CompetitorBasicDTO getUnluckyDTO() {
         return unlucky != null ? CompetitorBasicDTO.from(unlucky) : null;
+
     }
 
+    @JsonProperty("fanFavorite")
+    public CompetitorBasicDTO getFanFavoriteDTO() {
+        return fanFavorite != null ? CompetitorBasicDTO.from(fanFavorite) : null;
+    }
 
 
     public RaceDetail(RaceTimeSlot raceTimeSlot, RaceWeather raceWeather, Integer attendance, Competitor fanFavorite, Competitor unlucky) {

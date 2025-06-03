@@ -5,6 +5,7 @@ import Kart.repository.TrackRepository;
 import Kart.service.interfaces.ITrackService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,8 +36,18 @@ public class TrackService implements ITrackService {
         return trackRepository.save(track);
     }
 
-    public void deleteTrack(Integer id){
+    @Override
+    public void deleteTrack(Integer id) {
+        if (!trackRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't delete, there is no track with Id: " + id);
+        }
 
-        trackRepository.deleteById(id);
+        try {
+                 trackRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            // Handle foreign key constraint violation
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Cannot delete track with ID " + id + " because it is used by one or more races. ");
+        }
     }
 }

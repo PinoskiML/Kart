@@ -45,16 +45,10 @@ public class TrackController implements ITrackController {
 
     //  put
 
-    // delete
     @DeleteMapping("/tracks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrack(@PathVariable Integer id) {
-        try {
-            trackService.getTrackById(id);
-            trackService.deleteTrack(id);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }
+     trackService.deleteTrack(id);
     }
 
 }

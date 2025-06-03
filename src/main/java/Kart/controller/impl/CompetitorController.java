@@ -71,15 +71,10 @@ public class CompetitorController implements ICompetitorController {
     //deleteMapping
     @DeleteMapping("/competitors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompetitor(@PathVariable Integer id){
-
-        try {
-            competitorService.findCompetitorByid(id);
-            competitorService.deleteCompetitor(id);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }
+    public void deleteCompetitor(@PathVariable Integer id) {
+        competitorService.deleteCompetitor(id);
     }
+
 
     }
 

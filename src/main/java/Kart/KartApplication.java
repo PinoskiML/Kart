@@ -15,17 +15,6 @@ public class KartApplication {
 	}
 
 
-	//d
-	/*@Component
-	public class StartupDiagnostics implements CommandLineRunner {
-		@Autowired
-		private RaceService raceService; // Or whichever service has the verification method
 
-		@Override
-		public void run(String... args) {
-			System.out.println("Running relationship verification on startup...");
-			raceService.verifyRelationships();
-		}
-	}*/
 }
 
