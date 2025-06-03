@@ -52,10 +52,10 @@ public class RaceDetail {
         return CompetitorBasicDTO.from(unlucky);
     }
 */
-  @JsonProperty("fan_favorite")
+/*  @JsonProperty("fan_favorite")
   public CompetitorBasicDTO getFanFavoriteDTO() {
       return fanFavorite != null ? CompetitorBasicDTO.from(fanFavorite) : null;
-  }
+  }*/
 
     @JsonProperty("unlucky")
     public CompetitorBasicDTO getUnluckyDTO() {
