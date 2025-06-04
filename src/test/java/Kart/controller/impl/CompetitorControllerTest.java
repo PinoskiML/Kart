@@ -64,19 +64,6 @@ class CompetitorControllerTest {
 
     }
 
-    //Post
-
-/*
-    @Test
-    void newCompetitor_validBody_competitorSaved() throws Exception{
-        competitor.setId(@NotNull);
-        String body = objectMapper.writeValueAsString(competitor);
-
-        mockMvc.perform(post("/api/competitors/").content(body).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-    }
-*/
 
 
 
@@ -130,12 +117,6 @@ class CompetitorControllerTest {
 
     }
 
-
-/*    @PatchMapping("/competitors/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCompetitorTotalRaces(@RequestBody @Valid CompetitorTotalRacesDTO competitorTotalRacesDTO, @PathVariable Integer id){
-        competitorService.updateCompetitorTotalRaces(competitorTotalRacesDTO.getTotalRaces(), id);
-    }*/
 
 
 }

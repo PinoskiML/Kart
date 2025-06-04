@@ -57,10 +57,9 @@ class TrackControllerTest {
         String responseJson = result.getResponse().getContentAsString();
         System.out.println("Response: " + responseJson);
 
-        // Change this line to use TrackDTO instead of Track
-        List<TrackDTO> trackList = objectMapper.readValue(
+        List<Track> trackList = objectMapper.readValue(
                 responseJson,
-                new TypeReference<List<TrackDTO>>() {}
+                new TypeReference<List<Track>>() {}
         );
 
         System.out.println("Track list size: " + trackList.size());

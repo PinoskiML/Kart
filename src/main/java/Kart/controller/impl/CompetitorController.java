@@ -53,7 +53,7 @@ public class CompetitorController implements ICompetitorController {
         return competitorService.newCompetitor(competitor);
     }
 
-    // ////////////////////////////////////////////////////////////patch
+    // /patch
     @PatchMapping("/competitors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCompetitorTotalRaces(@RequestBody @Valid CompetitorTotalRacesDTO competitorTotalRacesDTO, @PathVariable Integer id){

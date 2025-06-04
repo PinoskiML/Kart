@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,10 +47,10 @@ public class Track {
     @JsonProperty ("raceIds")
     public List<Integer> getRaceIds() {
         if (races == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         return races.stream()
-                .map(Race::getId)  // This gets the ID from each Race
+                .map(Race::getId)
                 .collect(Collectors.toList());
     }
 

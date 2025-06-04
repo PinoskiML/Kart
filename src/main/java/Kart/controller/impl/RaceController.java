@@ -1,6 +1,7 @@
 package Kart.controller.impl;
 
 import Kart.controller.dto.NewRaceDTO;
+import Kart.controller.interfaces.IRaceController;
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
 import Kart.model.Race;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class RaceController {
+public class RaceController implements IRaceController {
     @Autowired
     IRaceService raceService;
 
