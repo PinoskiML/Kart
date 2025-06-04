@@ -17,7 +17,7 @@ public class Competitor {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //add pattern to include space
+    //a s
     @NotNull
     private String firstName;
     @NotNull

@@ -11,4 +11,5 @@ import java.util.List;
 public interface CompetitorRepository extends JpaRepository<Competitor, Integer> {
     List<Competitor> findAllByCompetitorClass(CompetitorClass competitorClass);
 
+    List<Competitor> findAllByTotalRacesLessThan(Integer totalRaces);
 }

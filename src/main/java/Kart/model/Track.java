@@ -2,13 +2,16 @@ package Kart.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,20 +36,21 @@ public class Track {
 
     @Enumerated(EnumType.STRING)
     private TrackType trackType;
-    //rel
-    @JsonBackReference
+
 
     @OneToMany(mappedBy = "track")
+    @JsonIgnore
     private List<Race> races;
 
 
     //race IDs
+    @JsonProperty ("raceIds")
     public List<Integer> getRaceIds() {
         if (races == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         return races.stream()
-                .map(Race::getId)  // This gets the ID from each Race
+                .map(Race::getId)
                 .collect(Collectors.toList());
     }
 

@@ -33,23 +33,21 @@ public class Race {
     @NotNull
     private Integer numberOfLaps;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "track_id")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonBackReference
+    //@JsonManagedReference
+    //@JsonIgnore
     private Track track;
 
     @JsonProperty("track")
+    //@JsonIgnore
     public TrackDTO getTrackDTO(){
         return TrackDTO.fromTrack(track);
     }
 
-    public Integer getTrackId() {
-        return track != null ? track.getId() : null;
-    }
 
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "race_detail_id")
     @JsonManagedReference
     @ToString.Exclude
@@ -73,5 +71,7 @@ public class Race {
             raceDetail.setRace(this);
         }
     }
+
+
 
 }

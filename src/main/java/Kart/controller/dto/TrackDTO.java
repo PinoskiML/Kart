@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 //pojo
 public class TrackDTO {
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    */private Integer id;
 
     @NotNull
     private String name;
@@ -25,7 +25,7 @@ public class TrackDTO {
     @NotNull
     private Integer numberTurns;
 
-
+    @NotNull
     private TrackType trackType;
 
     //Factory
@@ -39,8 +39,5 @@ public class TrackDTO {
                 track.getTrackType()
         );
     }
-    //rel
-
-
-
+   //rel
 }

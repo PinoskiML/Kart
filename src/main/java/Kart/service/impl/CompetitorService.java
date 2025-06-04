@@ -2,16 +2,16 @@ package Kart.service.impl;
 
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
-import Kart.model.Track;
+
 import Kart.repository.CompetitorRepository;
 import Kart.service.interfaces.ICompetitorService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.support.CompositeUriComponentsContributor;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -25,6 +25,18 @@ public class CompetitorService implements ICompetitorService {
     @Override
     public List<Competitor> findAllByCompetitorClass( CompetitorClass competitorClass){
         return competitorRepository.findAllByCompetitorClass(competitorClass);
+    }
+
+    @Override
+    public Competitor findCompetitorByid(Integer id) {
+       Optional<Competitor> competitorOptional = competitorRepository.findById(id);
+       if (competitorOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Competitor: " + id + "not found.");
+            return competitorOptional.get();
+    }
+
+    @Override
+    public List<Competitor> findCompetitorsByTotalRacesLessThan(Integer totalRaces) {
+        return competitorRepository.findAllByTotalRacesLessThan(totalRaces);
     }
 
     @Override
@@ -50,6 +62,18 @@ public class CompetitorService implements ICompetitorService {
         if (!competitorRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't delete, there is no competitor with Id: " +id );
         }
+        //foreign key issues
+        try {
+            // Attempt to delete
+            competitorRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Cannot delete competitor with ID " + id + " because its a fan favorite or unlucky competitor in race details. " );
+        }
+
+
         competitorRepository.deleteById(id);
 
     }
