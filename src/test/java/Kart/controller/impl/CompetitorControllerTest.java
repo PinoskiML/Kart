@@ -1,5 +1,6 @@
 package Kart.controller.impl;
 
+import Kart.controller.dto.CompetitorTotalRacesDTO;
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
 import Kart.repository.CompetitorRepository;
@@ -20,17 +21,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -53,13 +51,16 @@ class CompetitorControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         competitor = new  Competitor("Karl", "Karlson", 6969, CompetitorClass.C1, 44);
-        //competitorRepository.save(competitor);
+        competitorRepository.save(competitor);
 
     }
 
     @AfterEach
     void tearDown(){
-        competitorRepository.deleteById(competitor.getId());
+        if (competitor.getId() != null){
+            competitorRepository.deleteById(competitor.getId());
+        }
+
 
     }
 
@@ -84,7 +85,7 @@ class CompetitorControllerTest {
     void updateCompetitor_validBody_competitorUpdated() throws Exception {
 
 
-        Competitor updatedCompetitor = new Competitor("JimmyJ", "Johnson", 666, CompetitorClass.C2, 44);
+        Competitor updatedCompetitor = new Competitor("JimmyJ", "Johnson", 16, CompetitorClass.C2, 44);
         updatedCompetitor = competitorRepository.save(updatedCompetitor);
         System.out.println("Original new Competitor" +updatedCompetitor);
 
@@ -92,8 +93,10 @@ class CompetitorControllerTest {
         Integer updatedCompetitorId = updatedCompetitor.getId();
         //check id
         System.out.println("updated competitor ID: " + updatedCompetitorId);
-        updatedCompetitor.setLastName("JacksonJr");
 
+
+        updatedCompetitor.setLastName("JacksonJr");
+        updatedCompetitor.setId(updatedCompetitorId);
 
         String body = objectMapper.writeValueAsString(updatedCompetitor);
 
@@ -107,12 +110,31 @@ class CompetitorControllerTest {
         competitorRepository.deleteById(updatedCompetitorId);
     }
 
-    //Post testing
+    //Patch competitorTotalRaces testing
 
-    /*@PostMapping("/competitors/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Competitor newCompetitor(@RequestBody @Valid Competitor competitor){
-        return competitorService.newCompetitor(competitor);
+
+    @Test
+    void updateCompetitorTotalRaces_validBody_updatedCompetitorTotalRaces()  throws Exception{
+        CompetitorTotalRacesDTO competitorTotalRacesDTO = new CompetitorTotalRacesDTO(666666);
+
+        String body = objectMapper.writeValueAsString(competitorTotalRacesDTO);
+
+        mockMvc.perform(patch("/api/competitors/" + competitor.getId()).content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertTrue(competitorRepository.findAll().toString().contains("666666"));
+
+
+
+
+    }
+
+
+/*    @PatchMapping("/competitors/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCompetitorTotalRaces(@RequestBody @Valid CompetitorTotalRacesDTO competitorTotalRacesDTO, @PathVariable Integer id){
+        competitorService.updateCompetitorTotalRaces(competitorTotalRacesDTO.getTotalRaces(), id);
     }*/
 
 

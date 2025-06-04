@@ -9,6 +9,7 @@ import Kart.service.interfaces.ICompetitorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -62,10 +63,18 @@ public class CompetitorController implements ICompetitorController {
 
 
 
-    @PutMapping("/competitors/{id}")
+    /*@PutMapping("/competitors/{id}")
     public Competitor updateCompetitor(@RequestBody @Valid Competitor competitor, @PathVariable Integer id){
         return competitorService.updateCompetitor(competitor, id);
+    }*/
+    @PutMapping("/competitors/{id}")
+    public ResponseEntity<Competitor> updateCompetitor(@PathVariable Integer id, @RequestBody Competitor competitor) {
+        // Ensure ID is set correctly before passing to service
+        competitor.setId(id);
+        Competitor updated = competitorService.updateCompetitor(competitor, id);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
+
 
 
     //deleteMapping
