@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface ITrackController {
-    ResponseEntity<List<TrackDTO>> findAllTracks();
+    ResponseEntity<List<Track>> findAllTracks();
     Track newTrack(Track track);
     void deleteTrack(Integer id);
 }

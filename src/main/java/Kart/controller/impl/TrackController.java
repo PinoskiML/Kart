@@ -23,14 +23,11 @@ public class TrackController implements ITrackController {
     @Autowired
     private TrackService trackService;
 
-    @Override // Keep this annotation
+    @Override
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> findAllTracks() { // Change return type to TrackDTO
+    public ResponseEntity<List<Track>> findAllTracks() {
         List<Track> tracks = trackService.findAll();
-        List<TrackDTO> trackDTOs = tracks.stream()
-                .map(TrackDTO::fromTrack)
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(trackDTOs, HttpStatus.OK); // Return DTOs
+        return new ResponseEntity<>(tracks, HttpStatus.OK);
     }
     // by id
 

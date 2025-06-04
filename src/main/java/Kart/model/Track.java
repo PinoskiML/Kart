@@ -2,7 +2,9 @@ package Kart.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,15 +35,15 @@ public class Track {
 
     @Enumerated(EnumType.STRING)
     private TrackType trackType;
-    //rel
-    @JsonBackReference
+
 
     @OneToMany(mappedBy = "track")
-    //@JsonManagedReference
+    @JsonIgnore
     private List<Race> races;
 
 
     //race IDs
+    @JsonProperty ("raceIds")
     public List<Integer> getRaceIds() {
         if (races == null) {
             return Collections.emptyList();

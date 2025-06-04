@@ -69,13 +69,13 @@ public class RaceService implements IRaceService {
     @Transactional
     @Override
     public Race newRace(NewRaceDTO newRaceDTO) {
-        // Create objects
+
         RaceDetail raceDetail = new RaceDetail();
         raceDetail.setRaceTimeSlot(newRaceDTO.getRaceDetail().getRaceTimeSlot());
         raceDetail.setRaceWeather(newRaceDTO.getRaceDetail().getRaceWeather());
         raceDetail.setAttendance(newRaceDTO.getRaceDetail().getAttendance());
 
-        // Competitors
+
         Competitor unlucky = competitorRepository.findById(newRaceDTO.getRaceDetail().getUnlucky())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unlucky not found"));
         Competitor fanFavorite = competitorRepository.findById(newRaceDTO.getRaceDetail().getFanFavorite())
@@ -83,11 +83,11 @@ public class RaceService implements IRaceService {
         Track track = trackRepository.findById(newRaceDTO.getTrackId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Track not found"));
 
-        // Set relationships
+
         raceDetail.setUnlucky(unlucky);
         raceDetail.setFanFavorite(fanFavorite);
 
-        // Create race and set relationships
+
         Race race = new Race();
         race.setName(newRaceDTO.getName());
         race.setRaceDate(newRaceDTO.getRaceDate());
