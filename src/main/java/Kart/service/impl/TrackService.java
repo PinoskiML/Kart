@@ -41,12 +41,11 @@ public class TrackService implements ITrackService {
         if (!trackRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't delete, there is no track with Id: " + id);
         }
-
+        //Delete needs to check if data on field is referenced,  cant delete if field is needed.
         try {
                  trackRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            // Handle foreign key constraint violation
-            throw new ResponseStatusException(
+                     throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "Cannot delete track with ID " + id + " because it is used by one or more races. ");
         }
     }

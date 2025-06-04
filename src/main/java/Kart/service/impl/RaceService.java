@@ -94,8 +94,6 @@ public class RaceService implements IRaceService {
         race.setRaceType(newRaceDTO.getRaceType());
         race.setNumberOfLaps(newRaceDTO.getNumberOfLaps());
         race.setTrack(track);
-
-        // Important: Set before saving - don't save raceDetail separately
         race.setRaceDetail(raceDetail);
 
         return raceRepository.save(race);

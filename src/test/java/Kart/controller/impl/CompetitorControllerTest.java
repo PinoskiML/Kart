@@ -5,24 +5,31 @@ import Kart.model.CompetitorClass;
 import Kart.repository.CompetitorRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,25 +51,39 @@ class CompetitorControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        //competitor = new Competitor(99999, "JimmyJ", "Jackson", 666, CompetitorClass.C2, 44);
+
+        competitor = new  Competitor("Karl", "Karlson", 6969, CompetitorClass.C1, 44);
         //competitorRepository.save(competitor);
 
     }
 
-   /* @AfterEach
-    void tearDown() {
-        competitorRepository.deleteById(99999);
-    }*/
+    @AfterEach
+    void tearDown(){
+        competitorRepository.deleteById(competitor.getId());
+
+    }
+
+    //Post
+
+/*
+    @Test
+    void newCompetitor_validBody_competitorSaved() throws Exception{
+        competitor.setId(@NotNull);
+        String body = objectMapper.writeValueAsString(competitor);
+
+        mockMvc.perform(post("/api/competitors/").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+    }
+*/
+
+
 
 
     @Test
     void updateCompetitor_validBody_competitorUpdated() throws Exception {
 
-        //due to bugs check if 99999 exists
-        //Optional<Competitor> optionalCompetitor = competitorRepository.findById(99999);
-        //System.out.println(optionalCompetitor + "exists");
 
-        // Create a new competitor with updated values
         Competitor updatedCompetitor = new Competitor("JimmyJ", "Johnson", 666, CompetitorClass.C2, 44);
         updatedCompetitor = competitorRepository.save(updatedCompetitor);
         System.out.println("Original new Competitor" +updatedCompetitor);
@@ -86,48 +107,15 @@ class CompetitorControllerTest {
         competitorRepository.deleteById(updatedCompetitorId);
     }
 
+    //Post testing
 
-/*    @Test
-    void updateCompetitor_validBody_competitorUpdated() throws Exception {
-        Optional<Competitor> competitorOptional = competitorRepository.findById(99999);
-        assertTrue(competitorOptional.isPresent());
-        Competitor competitor1 = competitorOptional.get();
-
-        competitor1.setLastName("Johnson");
-
-        String body = objectMapper.writeValueAsString(competitor1);
-
-        mockMvc.perform(put("/api/competitors/99999").content(body).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        assertTrue(competitorRepository.findAll().toString().contains("Johnson"));
-
+    /*@PostMapping("/competitors/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Competitor newCompetitor(@RequestBody @Valid Competitor competitor){
+        return competitorService.newCompetitor(competitor);
     }*/
+
+
 }
-
-/*    @Test
-    void testFindAllCompetitorsClassC3_allC3Competitors()throws Exception{
-
-       // MvcResult result = mockMvc.perform .get("/competitors/class/C1")).contentType(MediaType.APPLICATION_JSON)
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .get("/competitors/class/C3")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isFound()) // Status 302 (FOUND)
-                .andReturn();
-
-        String responseJson = result.getResponse().getContentAsString();
-        List<Competitor> competitorList = objectMapper.readValue(
-                responseJson,
-                new TypeReference<List<Competitor>>() {}
-        );
-
-        assertEquals(8, competitorList.size());
-
-
-
-    }*/
-
-
 
 

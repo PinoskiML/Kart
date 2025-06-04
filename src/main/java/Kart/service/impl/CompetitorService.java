@@ -2,18 +2,16 @@ package Kart.service.impl;
 
 import Kart.model.Competitor;
 import Kart.model.CompetitorClass;
-import Kart.model.RaceDetail;
-import Kart.model.Track;
+
 import Kart.repository.CompetitorRepository;
 import Kart.service.interfaces.ICompetitorService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.support.CompositeUriComponentsContributor;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -33,7 +31,7 @@ public class CompetitorService implements ICompetitorService {
     public Competitor findCompetitorByid(Integer id) {
        Optional<Competitor> competitorOptional = competitorRepository.findById(id);
        if (competitorOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Competitor: " + id + "not found.");
-        return competitorOptional.get();
+            return competitorOptional.get();
     }
 
     @Override
@@ -64,7 +62,7 @@ public class CompetitorService implements ICompetitorService {
         if (!competitorRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't delete, there is no competitor with Id: " +id );
         }
-        //foreugn key issues
+        //foreign key issues
         try {
             // Attempt to delete
             competitorRepository.deleteById(id);
