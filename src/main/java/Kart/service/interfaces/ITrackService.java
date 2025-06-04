@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-public interface ITrackService {
+public interface
+ITrackService {
   List<Track> findAll();
   Track getTrackById(Integer id);
   Track newTrack(Track track);

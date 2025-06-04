@@ -42,9 +42,6 @@ public class TrackController implements ITrackController {
         return trackService.newTrack(track);
     }
 
-    //  patch
-
-    //  put
 
     @DeleteMapping("/tracks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

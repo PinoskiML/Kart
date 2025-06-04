@@ -62,14 +62,9 @@ public class CompetitorController implements ICompetitorController {
 
 
 
-
-    /*@PutMapping("/competitors/{id}")
-    public Competitor updateCompetitor(@RequestBody @Valid Competitor competitor, @PathVariable Integer id){
-        return competitorService.updateCompetitor(competitor, id);
-    }*/
     @PutMapping("/competitors/{id}")
     public ResponseEntity<Competitor> updateCompetitor(@PathVariable Integer id, @RequestBody Competitor competitor) {
-        // Ensure ID is set correctly before passing to service
+
         competitor.setId(id);
         Competitor updated = competitorService.updateCompetitor(competitor, id);
         return new ResponseEntity<>(updated, HttpStatus.OK);
@@ -77,7 +72,7 @@ public class CompetitorController implements ICompetitorController {
 
 
 
-    //deleteMapping
+
     @DeleteMapping("/competitors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompetitor(@PathVariable Integer id) {

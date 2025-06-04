@@ -36,12 +36,12 @@ public class Race {
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "track_id")
     @JsonBackReference
-    //@JsonManagedReference
+
     //@JsonIgnore
     private Track track;
 
     @JsonProperty("track")
-    //@JsonIgnore
+
     public TrackDTO getTrackDTO(){
         return TrackDTO.fromTrack(track);
     }

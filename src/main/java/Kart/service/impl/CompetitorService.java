@@ -64,7 +64,7 @@ public class CompetitorService implements ICompetitorService {
         }
         //foreign key issues
         try {
-            // Attempt to delete
+
             competitorRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
 
