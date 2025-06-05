@@ -29,7 +29,7 @@ public class TrackController implements ITrackController {
         List<Track> tracks = trackService.findAll();
         return new ResponseEntity<>(tracks, HttpStatus.OK);
     }
-    // by id
+
 
     @GetMapping("/tracks/{id}")
     public Track getTrackById(@PathVariable Integer id) {

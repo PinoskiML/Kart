@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-//pojo
+
 public class CompetitorTotalRacesDTO {
     @NotNull
     @Positive(message = "Cant be a negative number")

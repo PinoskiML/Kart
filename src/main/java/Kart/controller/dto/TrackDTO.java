@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-//pojo
+
 public class TrackDTO {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    */private Integer id;
+    private Integer id;
 
     @NotNull
     private String name;

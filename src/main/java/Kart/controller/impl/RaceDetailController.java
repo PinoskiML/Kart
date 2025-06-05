@@ -21,7 +21,6 @@ import java.util.List;
 public class RaceDetailController implements IRaceDetailController {
     @Autowired
     IRaceDetailService iRaceDetailService;
-    //@Autowired
 
 
     @ResponseStatus(HttpStatus.FOUND)
